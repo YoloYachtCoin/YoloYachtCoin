@@ -1041,36 +1041,27 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
     int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
+
     // Force block reward to zero when right shift is undefined.
     if (halvings >= 64)
         return 0;
 
     CAmount nSubsidy = 1000000 * COIN;
 
-    if (nHeight == 1) {
+    // Blockchain payout
+    if (nHeight == 1) // Pre-mine pool for investments and to help pay devs
         nSubsidy = 10000000000 * COIN;
-        return nSubsidy;
-    }
-
-    if (nHeight == 13000) {
+    else if (nHeight == 13000) // Awww...sucks to be you.  This was an unlucky block.
         nSubsidy = 1 * COIN;
-        return nSubsidy;
-    }
-
-    if (nHeight == 69000) {
+    else if (nHeight == 69000) // 69 lottery block
         nSubsidy = 69696969 * COIN;
-        return nSubsidy;
-    }
-
-    if (nHeight == 420000) {
+    else if (nHeight == 420000) // 420 lottery block
         nSubsidy = 42000000 * COIN;
-        return nSubsidy;
-    }
+    else
+        nSubsidy >>= halvings;
 
-    nSubsidy >>= halvings;
     return nSubsidy;
 }
-
 
 bool IsInitialBlockDownload()
 {
