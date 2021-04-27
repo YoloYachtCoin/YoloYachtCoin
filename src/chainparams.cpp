@@ -78,7 +78,9 @@ class CMainParams : public CChainParams {
 public:
     CMainParams() {
         strNetworkID = "main";
-        consensus.nSubsidyHalvingInterval = 100000; // Number of blocks before halving the subsidy payout
+
+        // Number of blocks before halving the subsidy payout
+        consensus.nSubsidyHalvingInterval = 50000;
 
         // Move to version 2 blocks, do not recognize v1 blocks after this height + hash
         consensus.BIP34Height = 710000;
