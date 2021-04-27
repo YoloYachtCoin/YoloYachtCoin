@@ -14,9 +14,9 @@
 
 #include "chainparamsseeds.h"
 
-static const SECONDS_TO_MINUTE = 60;
-static const MINUTES_TO_HOUR = 60;
-static const HOURS_TO_DAY = 24;
+static const u_int SECONDS_TO_MINUTE = 60;
+static const u_int MINUTES_TO_HOUR = 60;
+static const u_int HOURS_TO_DAY = 24;
 
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
