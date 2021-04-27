@@ -1,0 +1,176 @@
+{
+	"folders":
+	[
+		{
+			"path": ".."
+		}
+	],
+	"extensions":
+	{
+		"recommendations":
+		[
+			"ms-vscode.cpptools",
+			"ibm.output-colorizer",
+			"ms-vscode-remote.vscode-remote-extensionpack",
+			"mhutchie.git-graph"
+		]
+	},
+	"settings":
+	{
+		// VS Code Editor Settings
+		"editor.detectIndentation": true,
+		"editor.tabSize": 4,
+		"editor.insertSpaces": true,
+		"editor.find.autoFindInSelection": "multiline",
+		"editor.hover.delay": 200,
+		"editor.renderControlCharacters": true,
+		"editor.renderWhitespace": "boundary",
+		"editor.formatOnPaste": true,
+		"editor.tabCompletion": "on",
+		"editor.stablePeek": true,
+
+		// VS Code Files Settings
+		"files.trimTrailingWhitespace": true,
+		"files.trimFinalNewlines": true,
+		"files.insertFinalNewline": true,
+		"files.eol": "\n",
+		"files.autoGuessEncoding": true,
+		"files.associations":
+		{
+			// Select language by extension
+			"**/*.code-workspace": "jsonc",
+			"**/*.json": "jsonc",
+			"**/*.jsonc": "jsonc",
+			"**/*.c": "c",
+			"**/*.C": "cpp",
+			"**/*.cpp": "cpp",
+			"**/*.CPP": "cpp",
+			"**/*.cxx": "cpp",
+			"**/*.CXX": "cpp",
+			"**/*.h": "cpp",
+			"**/*.H": "cpp",
+			"**/*.hpp": "cpp",
+			"**/*.HPP": "cpp",
+			"**/*.java": "java",
+			"**/*.cs": "csharp",
+			"**/*.html": "html",
+			"**/*.css": "cs",
+			"**/*.js": "javascript",
+			"**/*.ts": "typescript",
+			"**/*.bat": "bat",
+			"**/*.vb": "vb",
+			"**/*.pl": "perl",
+			"**/*.ps": "powershell",
+			"**/*.py": "python",
+			"**/*.sql": "sql",
+			"**/*.xml": "xml",
+			"**/*.ksh": "shellscript",
+			"**/*.mk": "makefile",
+			"**/*.cmake": "makefile",
+			"**/*.i": "makefile",
+			"**/*.Dockerfile": "dockerfile",
+			"**/*.dockerfile": "dockerfile",
+			"**/*.Log": "log",
+			"**/*.log": "log",
+			"**/*.ini": "ini",
+			"**/*.swift": "swift",
+			"**/*.lua": "lua",
+			"**/*.php": "php",
+			"**/*.properties": "properties",
+			"**/*.xsl": "xsl",
+
+			// Treat text files as text after all cmake/make files have been detected
+			"**/*.txt": "plaintext",
+			"**/*.doc": "plaintext",
+			"**/*.docs": "plaintext",
+
+			// Treat all other files as shell-script so that files with no extension will show up as script
+			"**/*": "shellscript"
+		},
+		"files.watcherExclude":
+		{
+			"**/.git/objects/**": true,
+			"**/.git/subtree-cache/**": true,
+			"**/node_modules/*/**": true,
+
+			"**/*.jpg": true,
+			"**/*.png": true,
+			"**/*.msi": true,
+			"**/*.exe": true,
+			"**/*.bin": true,
+			"**/*.doc": true,
+			"**/*.doc*": true,
+			"**/*.pdf": true,
+			"**/*.zip": true,
+			"**/*.tar.*": true,
+			"**/*.tar": true,
+			"**/*.dll": true,
+			"**/*.dll.*": true,
+			"**/*.lib": true,
+			"**/*.lib.*": true,
+			"**/*.so": true,
+			"**/*.so.*": true,
+			"**/*.a": true,
+			"**/*.o": true
+		},
+
+		// VS Code Search Settings
+		"search.useIgnoreFiles": true,
+		"search.exclude":
+		{
+			"**/node_modules": true,
+			"**/bower_components": true,
+			"**/.git": true
+		},
+		"search.smartCase": true,
+		"search.showLineNumbers": true,
+		"search.quickOpen.includeSymbols": true,
+
+		// C/C++ Development Settings
+		"C_Cpp.formatting": "Default",
+		"C_Cpp.clang_format_style": "file",
+		"C_Cpp.clang_format_fallbackStyle": "none",
+		"C_Cpp.workspaceSymbols": "All",
+		"C_Cpp.workspaceParsingPriority": "high",
+		"C_Cpp.updateChannel": "Insiders",
+		"C_Cpp.commentContinuationPatterns":
+		[
+			"/**"
+		],
+		"C_Cpp.intelliSenseEngine": "Default",
+		"C_Cpp.intelliSenseEngineFallback": "Enabled",
+		"C_Cpp.exclusionPolicy": "checkFilesAndFolders",
+		"C_Cpp.loggingLevel": "Warning",
+		"C_Cpp.default.browse.limitSymbolsToIncludedHeaders": false,
+		"C_Cpp.default.cppStandard": "c++11",
+		"C_Cpp.default.cStandard": "c11",
+		"C_Cpp.default.compilerPath": "/usr/bin/g++",
+		"C_Cpp.default.enableConfigurationSquiggles": true,
+		"C_Cpp.default.includePath":
+		[
+		],
+		"C_Cpp.default.intelliSenseMode": "gcc-x64",
+		"C_Cpp.default.defines":
+		[
+			"_DEBUG",
+			"UNICODE",
+			"_UNICODE"
+		],
+
+		// Git Settings
+		"git.enabled": true,
+		"git.autofetch": true,
+		"git.autoStash": true,
+		"git.fetchOnPull": true,
+		"git.allowForcePush": true,
+		"git.showPushSuccessNotification": true,
+		"git.alwaysShowStagedChangesResourceGroup": true,
+
+		// Git-Graph Settings
+		"git-graph.fetchAndPrune": true,
+
+		// Terminal Settings
+		"terminal.integrated.experimentalUseTitleEvent": true,
+		"terminal.integrated.scrollback": 100000
+	}
+}
