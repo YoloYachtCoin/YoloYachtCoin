@@ -14,6 +14,10 @@
 
 #include "chainparamsseeds.h"
 
+static const SECONDS_TO_MINUTE = 60;
+static const MINUTES_TO_HOUR = 60;
+static const HOURS_TO_DAY = 24;
+
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
     CMutableTransaction txNew;
@@ -74,18 +78,40 @@ class CMainParams : public CChainParams {
 public:
     CMainParams() {
         strNetworkID = "main";
-        consensus.nSubsidyHalvingInterval = 100000;
+        consensus.nSubsidyHalvingInterval = 100000; // Number of blocks before halving the subsidy payout
+
+        // Move to version 2 blocks, do not recognize v1 blocks after this height + hash
         consensus.BIP34Height = 710000;
         consensus.BIP34Hash = uint256S("fa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf");
+
+        // Implements OP_CHECKLOCKTIMEVERIFY opcode which locks tx's until future time
         consensus.BIP65Height = 918684; // bab3041e8977e0dc3eeff63fe707b92bde1dd449d8efafb248c27c8264cc311a
+
+        // Enforces DER encoding from 363725 block onwards. https://en.wikipedia.org/wiki/X.690#DER_encoding
         consensus.BIP66Height = 811879; // 7aceee012833fa8952f8835d8b1b3ae233cd6ab08fdb27a771d2bd7bdc491894
-        consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); 
-        consensus.nPowTargetTimespan = 4 * 60 * 60;
-        consensus.nPowTargetSpacing = 60;
+
+        //Maximum proof of work value. This is used in difficulty calculation.
+        consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+
+        // Difficulty is adjusted every 1 hour
+        consensus.nPowTargetTimespan = 1 * MINUTES_TO_HOUR * SECONDS_TO_MINUTE;
+
+        // 1 block every 1 minutes
+        consensus.nPowTargetSpacing = 1 * SECONDS_TO_MINUTE;
+
+        // Minimum difficulty blocks IF miners fail to find blocks for two 10 minute intervals in a row. This is only activated for test networks.
         consensus.fPowAllowMinDifficultyBlocks = false;
+
+        // Allow difficulty retargeting on main net
         consensus.fPowNoRetargeting = false;
-        consensus.nRuleChangeActivationThreshold = 6048; // 75% of 8064
-        consensus.nMinerConfirmationWindow = 8064; // nPowTargetTimespan / nPowTargetSpacing * 4
+
+        // 75% consensus must be obtained in the specified blocks time (window = one retargeting period).
+        consensus.nMinerConfirmationWindow = (consensus.nPowTargetTimespan / consensus.nPowTargetSpacing) * 4;
+
+        // 75% consensus is required to accept protocol rule changes
+        consensus.nRuleChangeActivationThreshold = consensus.nMinerConfirmationWindow * 0.75;
+
+        // Satoshi's playground
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
@@ -100,32 +126,42 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1485561600; // January 28, 2017
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1517356801; // January 31st, 2018
 
+        // Newly mined blocks must have a hash smaller than this.
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000000000d169151893e4d0");
 
+        // Don't trust, verify. But only if block height > specified height
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x59c9b9d3fec105bdc716d84caa7579503d5b05b73618d0bf2d5fa639f780a011"); //1353397
+        consensus.defaultAssumeValid = uint256S("0x59c9b9d3fec105bdc716d84caa7579503d5b05b73618d0bf2d5fa639f780a011"); // 1353397
 
-        /**
-         * The message start string is designed to be unlikely to occur in normal data.
-         * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
-         * a large 32-bit integer with any alignment.
-         */
+        // The message start string is designed to be unlikely to occur in normal data.
+        // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
+        // a large 32-bit integer with any alignment.
         pchMessageStart[0] = 0xd0;
         pchMessageStart[1] = 0xe1;
         pchMessageStart[2] = 0xf5;
         pchMessageStart[3] = 0xec;
+
+        // Network connection port
         nDefaultPort = 4279;
+
+        // Start pruning blocks after the specified height
         nPruneAfterHeight = 100000;
 
+        // Note the parameters used for our genesis block.  Use these to roll out your own in coding exercises.
         genesis = CreateGenesisBlock(1616113341, 2084938450, 0x1e0ffff0, 1, 50 * COIN);
+
+        // Set genesis block hash
         consensus.hashGenesisBlock = genesis.GetHash();
+
+        // Assert that no one has tampered with Satoshi's block.
         assert(consensus.hashGenesisBlock == uint256S("0x7a296205df3ef0a7e65aa7bea75a31b728768a4150d7277bc0afd97d707ac4b1"));
         assert(genesis.hashMerkleRoot == uint256S("0x827bcb803524e1cc6074e6ad931ddfd2871f37e3995274851814201ffef13baf"));
 
         // Note that of those with the service bits flag, most only support a subset of possible options
         vSeeds.emplace_back("dns01.wsbcoin.fund", true);
 
+        // Set the prefixes for the main net. Note: 0 becomes one when base58 encoded
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,35);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
         base58Prefixes[SCRIPT_ADDRESS2] = std::vector<unsigned char>(1,50);
@@ -133,27 +169,34 @@ public:
         base58Prefixes[EXT_PUBLIC_KEY] = {0xff, 0x88, 0xB2, 0x1E};
         base58Prefixes[EXT_SECRET_KEY] = {0xff, 0x88, 0xAD, 0xE4};
 
+        // Copy pnSeed6_main from chainparamsseeds.h
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
 
+        // Whether to check mempool and block index consistency by default
         fDefaultConsistencyChecks = false;
+
+        // Filter out transactions that don't comply with the Bitcoin Core standard
         fRequireStandard = true;
+
+        // Whether we're in a test chain
         fMineBlocksOnDemand = false;
 
+        // Hard-coded check-points.  Blockchain is assumed valid before each of these.
         checkpointData = (CCheckpointData) {
             {
                 {     0, uint256S("0x7a296205df3ef0a7e65aa7bea75a31b728768a4150d7277bc0afd97d707ac4b1")},
                 {     1, uint256S("0x33ba454fb8df67a7784aae892829040de8b485e18058d6b0dfb0f5c9ec365ae2")},
                 { 13000, uint256S("0x33ba454fb8df67a7784aae892829040de8b485e18058d6b0dfb0f5c9ec365ae2")},
-		{ 17890, uint256S("0xafdfb580331476fac7ef4ed2b9896b3d177ea906d82a62fafe2c343efedb682c")},
+                { 17890, uint256S("0xafdfb580331476fac7ef4ed2b9896b3d177ea906d82a62fafe2c343efedb682c")},
             }
         };
 
-        chainTxData = ChainTxData{
-            // Data as of block 59c9b9d3fec105bdc716d84caa7579503d5b05b73618d0bf2d5fa639f780a011 (height 1353397).
-            1619499020, // * UNIX timestamp of last known number of transactions
-            26654,  // * total number of transactions between genesis and that timestamp
-                    //   (the tx=... number in the SetBestChain debug.log lines)
-            0.02     // * estimated number of transactions per second after that timestamp
+        // Transaction data from a certain block onwards. Discussed in the header section.
+        // Data as of block 59c9b9d3fec105bdc716d84caa7579503d5b05b73618d0bf2d5fa639f780a011 (height 1353397).
+        chainTxData = ChainTxData {
+            1619499020, // UNIX timestamp of last known number of transactions
+            26654,      // total number of transactions between genesis and that timestamp (the tx=... number in the SetBestChain debug.log lines)
+            0.02        // estimated number of transactions per second after that timestamp
         };
     }
 };
@@ -298,7 +341,7 @@ public:
 
         fDefaultConsistencyChecks = true;
         fRequireStandard = false;
-        fMineBlocksOnDemand = true; 
+        fMineBlocksOnDemand = true;
 
         checkpointData = (CCheckpointData) {
             {
