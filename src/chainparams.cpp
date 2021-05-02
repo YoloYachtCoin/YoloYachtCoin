@@ -84,8 +84,8 @@ public:
         consensus.nPowTargetSpacing = 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
-        consensus.nRuleChangeActivationThreshold = 6048; // 75% of 8064
-        consensus.nMinerConfirmationWindow = 2016;
+        consensus.nRuleChangeActivationThreshold = 518; // 75% of 690
+        consensus.nMinerConfirmationWindow = 690;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
@@ -101,10 +101,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1517356801; // January 31st, 2018
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000118fec0c691cc17");
+        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000011982ed71ba53ec");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x26f5256e0561ce17137a587122aa01c0c9a1a96fe41d1b5d1e0bfec19e5f248f"); // 20821
+        consensus.defaultAssumeValid = uint256S("0xbf7c167541da41733a4d85880f645ff2aa7ada050486b960f37aa93347d6e073"); // 20865
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -146,14 +146,14 @@ public:
                 { 13000, uint256S("0x33ba454fb8df67a7784aae892829040de8b485e18058d6b0dfb0f5c9ec365ae2")},
 		{ 17890, uint256S("0xafdfb580331476fac7ef4ed2b9896b3d177ea906d82a62fafe2c343efedb682c")},
 		{ 20821, uint256S("0x26f5256e0561ce17137a587122aa01c0c9a1a96fe41d1b5d1e0bfec19e5f248f")},
+		{ 20865, uint256S("0xbf7c167541da41733a4d85880f645ff2aa7ada050486b960f37aa93347d6e073")},
             }
         };
 
         chainTxData = ChainTxData{
-            // Data as of block height 20821
-            1619946076, // * UNIX timestamp of last known number of transactions
-            31480,      // * total number of transactions between genesis and that timestamp
-                        //   (the tx=... number in the SetBestChain debug.log lines)
+            // Data as of block height 20865
+            1619975926, // * UNIX timestamp of last known number of transactions
+            31520,      //   (the tx=... number in the SetBestChain debug.log lines)
             0.017       // * estimated number of transactions per second after that timestamp
         };
     }
@@ -176,8 +176,8 @@ public:
         consensus.nPowTargetSpacing = 60;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
-        consensus.nRuleChangeActivationThreshold = 6048; // 75% for testchains
-        consensus.nMinerConfirmationWindow = 8064; // nPowTargetTimespan / nPowTargetSpacing
+        consensus.nRuleChangeActivationThreshold = 518; // 75% for testchains
+        consensus.nMinerConfirmationWindow = 690; // nPowTargetTimespan / nPowTargetSpacing
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
