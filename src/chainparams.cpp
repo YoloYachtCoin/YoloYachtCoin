@@ -83,9 +83,12 @@ public:
         consensus.nPowTargetTimespan = 4 * 60 * 60;
         consensus.nPowTargetSpacing = 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
+        
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 518; // 75% of 690
         consensus.nMinerConfirmationWindow = 690;
+        consensus.nPowKGWHeight = 21440;
+        consensus.nPowDGWHeight = 21440;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
