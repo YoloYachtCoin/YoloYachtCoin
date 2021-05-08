@@ -89,7 +89,7 @@ public:
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); 
         consensus.nPowTargetTimespan = 4 * 60 * 60;
         consensus.nPowTargetSpacing = 60;
-        consensus.nPowDGWHeight = 100;
+        consensus.nPowDGWHeight = 21582;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 518; // 75% of 690
@@ -109,10 +109,10 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1517356801; // January 31st, 2018
 
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x000000000000000000000000000000000000000000000000011982ed71ba53ec");
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000125885f49d0b61e");
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0xbf7c167541da41733a4d85880f645ff2aa7ada050486b960f37aa93347d6e073"); // 20865
+        consensus.defaultAssumeValid = uint256S("0x5b0c64811ad0a962afce4932a653fbe4e0c9676f67b2bae5c8e141f3f11a09e0"); // 21575
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -155,14 +155,15 @@ public:
 		{ 17890, uint256S("0xafdfb580331476fac7ef4ed2b9896b3d177ea906d82a62fafe2c343efedb682c")},
 		{ 20821, uint256S("0x26f5256e0561ce17137a587122aa01c0c9a1a96fe41d1b5d1e0bfec19e5f248f")},
 		{ 20865, uint256S("0xbf7c167541da41733a4d85880f645ff2aa7ada050486b960f37aa93347d6e073")},
+		{ 21575, uint256S("0x5b0c64811ad0a962afce4932a653fbe4e0c9676f67b2bae5c8e141f3f11a09e0")},
             }
         };
 
         chainTxData = ChainTxData{
             // Data as of block height 20865
-            1619975926, // * UNIX timestamp of last known number of transactions
-            31520,      //   (the tx=... number in the SetBestChain debug.log lines)
-            0.017       // * estimated number of transactions per second after that timestamp
+            1620446858, // * UNIX timestamp of last known number of transactions
+            32904,      //   (the tx=... number in the SetBestChain debug.log lines)
+            0.014       // * estimated number of transactions per second after that timestamp
         };
     }
 };
