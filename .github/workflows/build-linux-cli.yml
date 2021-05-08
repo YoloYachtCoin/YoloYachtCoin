@@ -1,33 +1,40 @@
 name: build-linux-cli
-on: [push]
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  check-bats-version:
+  build:
+
     runs-on: ubuntu-18.04
+
     steps:
-      - name: install prereqs
-        run: |
-          sudo apt update
-          sudo apt install -y \
-            libevent-dev \
-            libminiupnpc-dev \
-            libzmq5-dev \
-            libqt5gui5 \
-            libqt5core5a \
-            libqt5dbus5 \
-            qttools5-dev \
-            qttools5-dev-tools \
-            libprotobuf-dev \
-            protobuf-compiler \
-            libqrencode-dev \
-            libdb++-dev \
-            g++-mingw-w64-x86-64 \
-            nsis \
-            libboost-all-dev
-      - name: check out
-        uses: actions/checkout@v2
-      - name: autogen
-        run: ./autogen.sh
-      - name: configure
-        run: ./configure --with-incompatible-bdb
-      - name: build
-        run: make
+    - name: install prereqs
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          libevent-dev \
+          libminiupnpc-dev \
+          libzmq5-dev \
+          libqt5gui5 \
+          libqt5core5a \
+          libqt5dbus5 \
+          qttools5-dev \
+          qttools5-dev-tools \
+          libprotobuf-dev \
+          protobuf-compiler \
+          libqrencode-dev \
+          libdb++-dev \
+          g++-mingw-w64-x86-64 \
+          nsis \
+          libboost-all-dev
+    - uses: actions/checkout@v2
+    - name: autogen and configure
+      run: |
+        ./autogen.sh
+        ./configure --disable-man --with-incompatible-bdb
+    - name: make deploy
+      run: make
