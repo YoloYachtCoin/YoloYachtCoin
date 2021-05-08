@@ -41,4 +41,4 @@ jobs:
         ./autogen.sh
         CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/ --disable-man --with-incompatible-bdb
     - name: make deploy
-      run: make -deploy
+      run: make deploy
