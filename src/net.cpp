@@ -2535,6 +2535,7 @@ bool CConnman::RemoveAddedNode(const std::string& strNode)
     return false;
 }
 
+/**
 size_t CConnman::GetNodeCount(NumConnections flags)
 {
     LOCK(cs_vNodes);
@@ -2545,6 +2546,24 @@ size_t CConnman::GetNodeCount(NumConnections flags)
     for(std::vector<CNode*>::const_iterator it = vNodes.begin(); it != vNodes.end(); ++it)
         if (flags & ((*it)->fInbound ? CONNECTIONS_IN : CONNECTIONS_OUT))
             nNum++;
+
+    return nNum;
+}
+**/
+
+size_t CConnman::GetNodeCount(NumConnections flags)
+{
+    LOCK(cs_vNodes);
+
+    int nNum = 0;
+    for (const auto& pnode : vNodes) {
+        if (pnode->fDisconnect) {
+            continue;
+        }
+        if (flags & (pnode->fInbound ? CONNECTIONS_IN : CONNECTIONS_OUT)) {
+            nNum++;
+        }
+    }
 
     return nNum;
 }

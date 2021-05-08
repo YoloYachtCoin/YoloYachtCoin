@@ -89,6 +89,7 @@ public:
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); 
         consensus.nPowTargetTimespan = 4 * 60 * 60;
         consensus.nPowTargetSpacing = 60;
+        consensus.nPowDGWHeight = 100;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 518; // 75% of 690
@@ -181,8 +182,8 @@ public:
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 4 * 60 * 60; //
         consensus.nPowTargetSpacing = 60;
-        consensus.nPowDGWHeight = 100;
-        consensus.fPowAllowMinDifficultyBlocks = true;
+        consensus.nPowDGWHeight = 150;
+        consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 518; // 75% for testchains
         consensus.nMinerConfirmationWindow = 690; // nPowTargetTimespan / nPowTargetSpacing
@@ -210,7 +211,7 @@ public:
         pchMessageStart[1] = 0xf1;
         pchMessageStart[2] = 0xff;
         pchMessageStart[3] = 0xf2;
-        nDefaultPort = 19335;
+        nDefaultPort = 9724;
         nPruneAfterHeight = 160000;
 
         genesis = CreateGenesisBlock(1616112401, 1500234, 0x1e0ffff0, 1, 50 * COIN);
@@ -258,14 +259,15 @@ class CRegTestParams : public CChainParams {
 public:
     CRegTestParams() {
         strNetworkID = "regtest";
-        consensus.nSubsidyHalvingInterval = 150;
+        consensus.nSubsidyHalvingInterval = 50000;
         consensus.BIP34Height = 100000000; // BIP34 has not activated on regtest (far in the future so block v1 are not rejected in tests)
         consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in rpc activation tests)
         consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in rpc activation tests)
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 3.5 * 24 * 60 * 60; // two weeks
-        consensus.nPowTargetSpacing = 2.5 * 60;
+        consensus.nPowTargetTimespan = 4 * 60 * 60;
+        consensus.nPowTargetSpacing = 60;
+        consensus.nPowDGWHeight = 100;
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
@@ -290,7 +292,7 @@ public:
         pchMessageStart[1] = 0xbf;
         pchMessageStart[2] = 0xb5;
         pchMessageStart[3] = 0xda;
-        nDefaultPort = 19444;
+        nDefaultPort = 42069;
         nPruneAfterHeight = 1000;
 
         genesis = CreateGenesisBlock(1616113059, 1306945, 0x1e0ffff0, 1, 50 * COIN);
