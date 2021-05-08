@@ -7,35 +7,12 @@ jobs:
       - name: install prereqs
         run: |
           sudo apt update
-          sudo apt install -y \
-            build-essential \
-            libtool \
-            autotools-dev \
-            automake \
-            pkg-config \
-            libssl-dev \
-            libevent-dev \
-            bsdmainutils \
-            libminiupnpc-dev \
-            libzmq3-dev \
-            libqt5gui5 \
-            libqt5core5a \
-            libqt5dbus5 \
-            qttools5-dev \
-            qttools5-dev-tools \
-            libprotobuf-dev \
-            protobuf-compiler \
-            libqrencode-dev \
-            libdb++-dev \
-            g++-mingw-w64-x86-64 \
-            nsis \
-            libboost-all-dev
-    - name: check out
-      - uses: actions/checkout@v2
-      - run: 
-    - name: autogen
-      - run: ./autogen.sh
-    - name: configure
-      - run: ./configure --with-incompatible-bdb
-    - name: build
-      - run: make
+          sudo apt install -y build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libminiupnpc-dev libzmq3-dev libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev libdb++-dev g++-mingw-w64-x86-64 nsis libboost-all-dev
+      - name: check out
+        uses: actions/checkout@v2
+      - name: autogen
+        run: ./autogen.sh
+      - name: configure
+        run: ./configure --with-incompatible-bdb
+      - name: build
+        run: make
